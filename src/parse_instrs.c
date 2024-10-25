@@ -96,6 +96,7 @@ void parse_and_load_program(char *prgrm, Program_Type prgrm_type) {
     if (isalpha(*str_instr->op)) {
       // the if solves the problem of empty lines or empty space between ';'
       uint32_t machine_instr = assembly_to_machine(str_instr);
+      uint32_t *temp;
       switch (prgrm_type) {
       case SRAM_PRGRM:
         write_file(sram, i++, machine_instr);
@@ -107,7 +108,7 @@ void parse_and_load_program(char *prgrm, Program_Type prgrm_type) {
         write_file(sram, i++, machine_instr);
         break;
       case EPROM_START_PRGRM:
-        uint32_t *temp =
+        temp =
             realloc(eprom, sizeof(uint32_t) * i + sizeof(uint32_t));
         if (temp == NULL) {
           fprintf(stderr, "Realloc failed\n");

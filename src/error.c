@@ -18,6 +18,7 @@ void display_error_message(const char *error_type, const char *error_message,
                            ErrorContextType error_context_type) {
   uint32_t rel_addr;
   uint8_t memory_map_const;
+  uint32_t addr;
   switch (error_context_type) {
   case Pntr:
     adjust_print(false, "%s:", NULL, error_context.filename);
@@ -26,7 +27,7 @@ void display_error_message(const char *error_type, const char *error_message,
         count_lines(error_context.code_current, error_context.code_begin));
     break;
   case Idx:
-    uint32_t addr = read_array(regs, PC, false);
+    addr = read_array(regs, PC, false);
     memory_map_const = addr >> 30;
     switch (memory_map_const) {
     case EPROM_CONST:
